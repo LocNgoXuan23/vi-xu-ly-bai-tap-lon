@@ -50,16 +50,19 @@ float getTemperature() { return temperature; }
 
 // == error handler ===============================================
 
-void errorHandler(int response)
+int errorHandler(int response)
 {
+	int status = 1;
 	switch(response) {
 	
 		case DHT_TIMEOUT_ERROR :
 			ESP_LOGE( TAG, "Sensor Timeout\n" );
+			status = 0;
 			break;
 
 		case DHT_CHECKSUM_ERROR:
 			ESP_LOGE( TAG, "CheckSum error\n" );
+			status = 0;
 			break;
 
 		case DHT_OK:
@@ -68,6 +71,7 @@ void errorHandler(int response)
 		default :
 			ESP_LOGE( TAG, "Unknown error\n" );
 	}
+	return status;
 }
 
 /*-------------------------------------------------------------------------------

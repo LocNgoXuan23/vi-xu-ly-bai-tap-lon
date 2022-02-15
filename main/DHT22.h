@@ -14,7 +14,7 @@
 // == function prototypes =======================================
 
 void 	setDHTgpio(int gpio);
-void 	errorHandler(int response);
+int 	errorHandler(int response);
 int 	readDHT();
 float 	getHumidity();
 float 	getTemperature();
