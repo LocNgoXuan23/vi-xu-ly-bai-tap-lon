@@ -345,7 +345,7 @@ void postSever(float ppm, float temperature, float humidity) {
 
     // sprintf(SUBREQUEST, "api_key=FLWOURMSDTF3LKGU&temperature=%d&humidity=%d&co2=%d", 200, 300, 100);
     // sprintf(REQUEST, "POST /update.json HTTP/1.1\nHost: api.thingspeak.com\nConnection: close\nContent-Type: application/x-www-form-urlencoded\nContent-Length:%d\n\n%s\n", strlen(SUBREQUEST), SUBREQUEST);
-    sprintf(REQUEST, "GET http://api.thingspeak.com/update?api_key=Y4XKGG93U5UUZDEH&field1=%f&field2=%f&field3=%f\n\n", getTemperature(), getHumidity(), ppm);
+    sprintf(REQUEST, "GET http://api.thingspeak.com/update?api_key=UM427T7864Q6ORA5&field1=%f&field2=%f&field3=%f\n\n", temperature, humidity, ppm);
     // sprintf(REQUEST, "GET http://api.thingspeak.com/channels/1638336/feeds.json?api_key=5QGPD6BOMURAERFK&results=2\n\n");
 
     if (write(s, REQUEST, strlen(REQUEST)) < 0) {
@@ -430,15 +430,15 @@ void app_main()
         float temperature = getTemperature();
         float humidity = getHumidity();
         
-        printf("Temperature is %.1f \n", temperature);
-        printf("Humidity is %.1f\n", humidity);
+        printf("Temperature is %.5f \n", temperature);
+        printf("Humidity is %.5f\n", humidity);
 
         PPM = getPPM(2);
         printf("PPM = %f", PPM );
         printf("| ADC = %d\n", getADC() );
         
         printf("\n-----------\n" );
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
 
 
         ESP_ERROR_CHECK( nvs_flash_init() );
@@ -448,7 +448,7 @@ void app_main()
         postSever(PPM, temperature, humidity);
 
         esp_wifi_disconnect();
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
+        vTaskDelay(600 * 1000 / portTICK_PERIOD_MS);
     }
 
 
